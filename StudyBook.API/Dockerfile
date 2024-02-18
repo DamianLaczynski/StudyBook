@@ -9,17 +9,17 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["StudyBookAPI/StudyBookAPI.csproj", "StudyBookAPI/"]
-RUN dotnet restore "./StudyBookAPI/./StudyBookAPI.csproj"
+COPY ["StudyBook.API/StudyBook.API.csproj", "StudyBook.API/"]
+RUN dotnet restore "./StudyBook.API/./StudyBook.API.csproj"
 COPY . .
-WORKDIR "/src/StudyBookAPI"
-RUN dotnet build "./StudyBookAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/StudyBook.API"
+RUN dotnet build "./StudyBook.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./StudyBookAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./StudyBook.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "StudyBookAPI.dll"]
+ENTRYPOINT ["dotnet", "StudyBook.API.dll"]
