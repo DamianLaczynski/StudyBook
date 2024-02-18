@@ -19,6 +19,6 @@ public class AppDbContext : IdentityDbContext<User>
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(Configuration.GetConnectionString("StudyBookApiDatabase"));
+        optionsBuilder.UseNpgsql(Configuration["ConnectionStrings:StudyBookApiDatabase"]);
     }
 }
