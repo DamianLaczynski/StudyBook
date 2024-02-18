@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using StudyBookAPI.Models;
+
 
 namespace StudyBookAPI
 {
@@ -7,8 +7,7 @@ namespace StudyBookAPI
     {
         public UserMappingProfile()
         {
-            CreateMap<Entities.User, GetUserDto>();
-            CreateMap<UpdateUserDto, Entities.User>();
+
         }
     }
 }
