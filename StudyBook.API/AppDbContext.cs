@@ -6,17 +6,17 @@ using StudyBookAPI.Entities;
 
 public class AppDbContext : IdentityDbContext<User>
 {
-    protected readonly IConfiguration Configuration;
+    private readonly IConfiguration Configuration;
 
     public AppDbContext(IConfiguration configuration, DbContextOptions<AppDbContext> options) : base(options)
     {
         Configuration = configuration;
     }
-    DbSet<Subject> Subjects { get; set; }
-    DbSet<FlashcardSet> FlashcardSets { get; set; }
-    DbSet<Flashcard> Flashcards { get; set; }
-    DbSet<Test> Tests { get; set; }
-    DbSet<Question> Questions { get; set; }
+    public DbSet<Subject> Subjects { get; set; }
+    public DbSet<FlashcardSet> FlashcardSets { get; set; }
+    public DbSet<Flashcard> Flashcards { get; set; }
+    public DbSet<Test> Tests { get; set; }
+    public DbSet<Question> Questions { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
