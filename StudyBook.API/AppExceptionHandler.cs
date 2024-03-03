@@ -16,9 +16,7 @@ namespace StudyBookAPI
             {
                 ForbiddenException => (403, ""),
                 BadRequestException badRequestException => (400, badRequestException.Message),
-                NotFoundException notFoundException => (404, notFoundException.Message),
                 KeyNotFoundException keyNotFoundException => (404, keyNotFoundException.Message),
-                NotImplementedException => (501, "Not implemented"),
                 _ => (500, "An error occurred")
             };
 
