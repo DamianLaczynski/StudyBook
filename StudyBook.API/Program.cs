@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
+using StudyBook.API.Services;
 using StudyBookAPI;
 using StudyBookAPI.Entities;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseNLog();
-
-builder.Services.AddControllers();
 
 //Database
 builder.Services.AddDbContext<AppDbContext>();
@@ -22,7 +21,9 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 
 //Services
-
+builder.Services.AddScoped<ISubjectService, SubjectService>();
+builder.Services.AddScoped<ITestService, TestService>();
+builder.Services.AddScoped<IFlashcardSetService, FlashcardSetService>();
 
 //Authentication and Authorization
 builder.Services.AddAuthentication();
@@ -30,6 +31,31 @@ builder.Services.AddAuthorizationBuilder();
 builder.Services.AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddApiEndpoints();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Password settings.
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+
+    // Lockout settings.
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+    // User settings.
+    options.User.AllowedUserNameCharacters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    options.User.RequireUniqueEmail = true;
+
+    // Default SignIn settings.
+    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedPhoneNumber = false;
+});
 
 //Exception handling
 builder.Services.AddExceptionHandler<AppExceptionHandler>();
@@ -43,6 +69,29 @@ builder.Services.AddSwaggerGen(options =>
 
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
 });
 
 //CORS
@@ -55,6 +104,8 @@ builder.Services.AddCors(setup =>
             .AllowAnyMethod();
     });
 });
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 

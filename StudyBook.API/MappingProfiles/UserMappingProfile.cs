@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 
 
-namespace StudyBookAPI
+namespace StudyBook.API.MappingProfiles
 {
     public class UserMappingProfile : Profile
     {
