@@ -48,6 +48,7 @@ namespace StudyBook.API.Services
                 throw new NotFoundException("Subject not found");
             }
 
+            _appDbContext.Subjects.Remove(subject);
             _appDbContext.SaveChanges();
         }
 
