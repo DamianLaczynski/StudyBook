@@ -1,0 +1,33 @@
+:root {
+    --Background: linear-gradient(90deg, rgba(6, 20, 27, 0.50) 0%, #06141B 22.92%, #06141B 76.05%, rgba(6, 20, 27, 0.50) 100%), #000;
+    --Gold: #FFC700;
+    --Gray: #4A5C6A;
+    --Red: #FF1C1C;
+    --Black: #1C1C1C;
+    --Green: #00FF19;
+    --Warning: var(--Red);
+    --Error: var(--Red);
+    --Text: var(--Black);
+  }
+  
+  .oauth-button {
+
+    padding: 15px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .oauth-button:hover {
+    background: rgba(170, 170, 170, 0.062);
+    transition: 0.5s;
+  }
+
+  .oauth-button:hover svg {
+    filter: invert(100%);
+  }
+  
+  .oauth-button svg {
+    fill: currentColor;
+    width: 24px;
+    height: 24px;
+  }
