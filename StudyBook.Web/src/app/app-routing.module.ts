@@ -15,6 +15,21 @@ import { FlashcardComponent } from './subject/components/flashcard/view/flashcar
 import { CreateFlashcardSetComponent } from './subject/components/flashcard/view/create-flashcard-set/create-flashcard-set.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'signIn', component: SignInComponent },
+  { path: 'signUp', component: SignUpComponent },
+  { path: 'subject', component: SubjectOverviewComponent },
+  { path: 'subject/create', component: CreateSubjectComponent },
+  { path: 'subject/:id', component: SubjectDetailsComponent, children:[
+    { path: 'flashcard', component: ListFlashcardSetComponent },
+    { path: 'tests', component: ListFlashcardSetComponent },
+  ] },
+  { path: 'subject/:id/edit', component: EditSubjectComponent },
+  { path: 'subject/:id/flashcard/create', component: CreateFlashcardSetComponent },
+  { path: 'subject/:subjectId/flashcard/:flashcardId', component: FlashcardComponent },
+  { path: 'test/:id', component: TestComponent },
+  { path: '**', component: NotFoundComponent }
 
 ];
 

@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-between">
+  <h2>Flashcards</h2>
+  <div>
+    <!--<button class="btn btn-danger m-1">Delete</button>-->
+    <button [routerLink]="'./flashcard/create'" class="btn btn-primary m-1">Add</button>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let flashcardSet of flashcardSets">
+      <th scope="row">
+        <input class="form-check-input" type="checkbox" value="{{flashcardSet.id}}" id="flexCheckDefault">
+      <td [routerLink]="'./flashcard/' + flashcardSet.id">{{flashcardSet.name}}</td>
+      <td>
+        <!--<button [routerLink]="'/flashcard/' + flashcardSet.id" class="btn btn-primary">Edit</button>-->
+      </td>
+    </tr>
+  </tbody>
+</table>

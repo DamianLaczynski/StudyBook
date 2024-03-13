@@ -1,0 +1,15 @@
+<div class="container w-25 p-3">
+    <h1 class="text-center mt-5">Create subject</h1>
+    <form class="text-center" [formGroup]="subjectForm" (ngSubmit)="create()">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" formControlName="name" required />
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input type="text" class="form-control" id="description" formControlName="description" required />
+      </div>
+      <button type="submit" class="btn btn-primary">Create subject</button>
+    </form>
+  </div>
+  

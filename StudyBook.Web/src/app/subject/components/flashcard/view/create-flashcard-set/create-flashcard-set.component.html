@@ -1,0 +1,27 @@
+<div class="w-50 m-auto mb-5">
+<form [formGroup]="flashcardSetForm" (ngSubmit)="onSubmit()" class="p-3">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name:</label>
+      <input type="text" id="name" formControlName="name" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description:</label>
+      <textarea id="description" formControlName="description" class="form-control"></textarea>
+    </div>
+  
+    <div formArrayName="flashcards">
+      <div *ngFor="let flashcard of flashcards.controls; let i = index" class="mb-3">
+        <div [formGroupName]="i">
+          <label for="question" class="form-label">Question:</label>
+          <input type="text" id="question" formControlName="question" class="form-control">
+          <label for="answer" class="form-label">Answer:</label>
+          <input type="text" id="answer" formControlName="answer" class="form-control">
+          <button type="button" (click)="removeFlashcard(i)" class="btn btn-danger mt-2">Remove Flashcard</button>
+        </div>
+      </div>
+    </div>
+  
+    <button type="button" (click)="addFlashcard()" class="btn btn-primary">Add Flashcard</button>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
